@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>BOT</title>
+</head>
+
+<body>
+<div id="app">
+    <!--    <form action="/query" method="get">-->
+    <!--        <label>-->
+    <!--            <input type="text" name="message" placeholder="算式">-->
+    <!--        </label>-->
+    <!--        <button type="submit">提交</button>-->
+    <!--    </form>-->
+
+    <input type="text" v-model="template" placeholder="模板" style="width: 500px"/>
+    <button type="submit" @click="submit">提交</button>
+
+    <br>
+    <br>
+    {{reply}}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            template: "",
+            reply: "",
+        },
+        methods: {
+            submit() {
+                axios({
+                    // baseURL: 'http://yapi.smart-xwork.cn/mock/268510/',
+                    url: '/getReport',
+                    method: 'post',
+                    params: {
+                        message: this.template
+                    }
+                }).then((response) => {
+                    console.log(response);
+                    // this.reply = response.data.data;
+                    this.reply = response.data.data;
+                });
+            },
+        },
+    });
+</script>
+</body>
+</html>

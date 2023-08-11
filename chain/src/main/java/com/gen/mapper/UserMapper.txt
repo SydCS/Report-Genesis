@@ -1,0 +1,38 @@
+package com.gen.mapper;
+
+import com.gen.entity.User;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Mapper
+public interface UserMapper {
+    @Select("SELECT * FROM user where name = #{name}")
+    User getUserByName(String name);
+
+    @Select("SELECT EXISTS(SELECT 1 FROM user WHERE name = #{name})")
+    boolean checkExistByName(String name);
+
+    @Select("SELECT NAME FROM role WHERE id IN (SELECT rid FROM role_user WHERE uid=(SELECT id FROM USER WHERE NAME=#{principal}))")
+    List<String> getUserRole(@Param("principal") String principal);
+
+    @Select({
+            "<script>",
+            "select info FROM permissions WHERE id IN ",
+            "(SELECT pid FROM role_ps WHERE rid IN (",
+            "SELECT id FROM role WHERE NAME IN ",
+            "<foreach collection='roles' item='name' open='(' separator=',' close=')'>",
+            "#{name}",
+            "</foreach>",
+            "))",
+            "</script>"
+    })
+    List<String> getUserPermission(@Param("roles") List<String> roles);
+
+    @Insert(value = "INSERT INTO user (NAME,PASSWORD) VALUES ('${user.name}','${user.password}')")
+    void addUser(@Param("user") User user);
+}

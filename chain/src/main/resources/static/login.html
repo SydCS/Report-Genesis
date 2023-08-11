@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGIN</title>
+</head>
+<body>
+
+<h2>kaptcha验证码</h2>
+<form action="user/login" method="post">
+    <input type="text" name="username" placeholder="用户名">
+    <br>
+    <input type="text" name="password" placeholder="密码">
+    <br>
+    <input type="text" name="verificationCode" placeholder="请输入验证码" required="true">
+    <img alt="单击图片刷新！" class="pointer" src="/common/kaptcha"
+         onclick="this.src='/common/kaptcha?d='+new Date()*1">
+    <br>
+    <button type="submit" value="submit">登陆</button>
+</form>
+
+</body>
+</html>

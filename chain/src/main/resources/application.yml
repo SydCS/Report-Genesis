@@ -1,0 +1,36 @@
+server:
+  port: 8088
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shiro?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#shiro:
+#  loginUrl: /user/toLogin
+
+knife4j:
+  enable: true
+  openapi:
+    title: Report Genesis
+    description: a BI project
+    concat: K
+    url: https://gitee.com/practical-training_111/report_gen
+    version: v1.0
+    terms-of-service-url: https://gitee.com/practical-training_111/report_gen
+    license: Apache 2.0
+    license-url: http://www.apache.org/licenses/LICENSE-2.0
+    group:
+      test1:
+        group-name: GEN
+        api-rule: package
+        api-rule-resources:
+          - com.gen
